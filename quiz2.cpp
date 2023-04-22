@@ -4,52 +4,31 @@
 #include <algorithm>
 using namespace std;
 
+void subString(string str,string temp, int l, int m, vector<string>&sub){
+    if(m==l) sub.push_back(temp);
+    else{
 
-void onFind(int num, vector<int> &n){
-    int k=0;
-    while(num>=pow(2,k)){
-        if((int(pow(2,k)) & num)!=0){
-            n.push_back(k);
-        }
-        k++;
+        subString(str,temp,l,m+1,sub);
+        temp.append(1,str[m]);
+        subString(str,temp,l,m+1,sub);
+
     }
+} 
 
-}
 
 int main(){
-    string str{"sai"};
-    int n=2;
-    
-
+    string str = "ABC";     //for testing only
     cin>>str;
-    n=str.size()+1;
-    //sort(str.begin(),str.end());
-    
-    vector <string> s{};
-    while(n--){
-        for(int i{};i<pow(2,str.length());i++){
-        vector <int> in{};
-        onFind(i,in);
+    int l = str.length();
+    vector<string> sub{}; 
 
-        // for(int i{};i<in.size();i++){
-        // cout<<in[i]<<" ";
-        // }
-        // cout<<i<<endl;
+    subString(str,"",l,0,sub);
 
-        if(in.size()==n){
-            string sr{};
-            for(int j{};j<in.size();j++){
-                
-                sr.append(1,str[in[j]]);
-            }
-            if(!(find(s.begin(), s.end(), sr)!=s.end()))s.push_back(sr);
-        }
-        }
+    //cout<<sub.size()<<endl;
+    sort(sub.begin(),sub.end());
+    for(int i=0;i<sub.size()-1;i++){
+        cout<<sub[i]<<" ";
     }
+    cout<<sub[sub.size()-1];
     
-   
-   sort(s.begin(),s.end());
-    for(int i{};i<s.size();i++){
-        cout<<s[i]<<" ";
-    }
 }
