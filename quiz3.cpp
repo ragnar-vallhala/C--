@@ -4,17 +4,19 @@
 #include <algorithm>
 using namespace std;
 
-int path(int a, int b){
-    //std::cout<<a<<' '<<b<<endl;
-    if(a==0||b==0||a==1||b==1) return 1;
-    else return (path(a-1,b)+path(a,b-1));
+int num(int n,int k){
+    if(n==1) return 1;
+    else{
+        return (num(n-1,k)+k-1)%n+1;
+    }
 }
-
 
 int main(){
 
-int a,b;
-cin>>a>>b;
-cout<<path(a,b);
+
+    int a,b;
+    cin>>a>>b;
+    cout<<num(a,b)<<endl;
+
     
 }
