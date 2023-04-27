@@ -1,3 +1,2 @@
-else if(n==1){
-            this->head = this->head->next;
-        }
+                    std::cout<<iter<<std::endl;
+                    std::cout<<iter->data<<std::endl;

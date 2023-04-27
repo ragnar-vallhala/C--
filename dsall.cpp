@@ -152,7 +152,7 @@ public:
 
 
     /*
-    Prints the data in the linked list between a range
+    Prints the data in the linked list
     */
     void print(){
         Node* temp = this->head;
@@ -189,11 +189,19 @@ public:
     @returns bool if LL is palindrome
     */
     bool isPalindrome(){
-        if(this->head == nullptr) return true;
+        bool flag = true;
+        if(this->head == nullptr) return flag;
         else{
-
-            Node* curr = this->head;
+            int len = this->size();
+            for(int i{1};i<=len/2;i++){
+                if(this->fetch(i)!=this->fetch(len+1-i)){
+                    flag=false;
+                    break;
+                }
+                
+            }
         }
+        return flag;
     }
 
     /*
@@ -292,6 +300,64 @@ public:
 
         return rev;
     }
+
+
+    /*
+    Overloads the == operator
+    @param &l: reference to the LL to be compared
+    */
+    bool operator==(LL &l){
+        if(this->size()!=l.size()) return false;
+        else if(this->head == nullptr && l.head == nullptr) return true;
+        else{
+            Node* temp1 = this->head;
+            Node* temp2 = l.head;
+
+            while(temp1->next!=nullptr){
+                if(temp1->data!=temp2->data) return false;
+                temp1 = temp1->next;
+                temp2 = temp2->next;
+            }
+        }
+        return true;
+    }
+
+
+    /*
+    Delete the duplicate nodes
+    */
+    void deleteDuplicates(){
+        if(this->head == nullptr) return;
+        else{
+            Node* temp = this->head;
+            
+            while(temp->next!=nullptr){
+
+                Node* iter = temp;
+                while(iter->next!=nullptr && iter!=nullptr){
+            
+                    if(temp->data == iter->next->data){
+                        if(iter->next->next!=nullptr) iter->next = iter->next->next;
+                        else iter->next = nullptr;
+                    }
+                    else{
+                        iter = iter->next;
+                    }
+
+                    
+                    
+                    
+                }
+
+                temp = temp->next;
+                this->print();
+                std::cout<<std::endl;
+                
+            }
+            
+        }
+    }
+
 };
 
 int main(){
@@ -304,11 +370,11 @@ int main(){
     for(int i=0;i<p;i++){
         n.add();
     }
-    
-    int k;
-    std::cin>>k;
-    n.remove(k+1);
+
+    n.deleteDuplicates();
     n.print();
+    
+
 
 
 }
