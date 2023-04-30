@@ -60,6 +60,7 @@ public:
     Allows access to LL class to the private members of node
     */
     friend class LL;
+
 };
 
 class LL{
@@ -169,7 +170,7 @@ public:
     @param n: index of node
     */
     int fetch(int n){
-        if(this->head==nullptr){
+        if(this->head==nullptr || n==0){
             return -1;
         }
         else{
@@ -331,7 +332,7 @@ public:
         else{
             Node* temp = this->head;
             
-            while(temp->next!=nullptr){
+            while(temp->next!=nullptr && temp!=nullptr){
 
                 Node* iter = temp;
                 while(iter->next!=nullptr && iter!=nullptr){
@@ -342,23 +343,120 @@ public:
                     }
                     else{
                         iter = iter->next;
-                    }
-
-                    
-                    
-                    
+                    }  
                 }
 
-                temp = temp->next;
-                this->print();
-                std::cout<<std::endl;
+                if(temp->next!=nullptr)temp = temp->next;
+                
                 
             }
             
         }
     }
 
+    /*
+    Sorted Merge two linked lists
+    @param l2: pointer to second linked list
+    @return merged list
+    */
+    LL *sortedMerge( LL *l2)
+    {   LL* l1 = this;
+        LL* nl = new LL();
+
+        Node *temp1 = l1->head;
+        Node *temp2 = l2->head;
+        std::cout<<(temp2!=nullptr)<<"case"<<std::endl;
+
+        while(temp1!=nullptr && temp2!=nullptr){
+            
+            if(temp1->data>=temp2->data){
+                nl->append(temp2->data);
+                temp2 = temp2->next;
+            }
+            else{
+                nl->append(temp1->data);
+                temp1 = temp1->next;
+            }
+        }
+        while(temp1!=nullptr){
+            
+            nl->append(temp1->data);
+            temp1 = temp1->next;
+        }
+        while(temp2!=nullptr){
+            nl->append(temp2->data);
+            temp2 = temp2->next;
+        }
+        
+
+        return nl;
+    }
+
+    /*
+    @return value of LL written in decimal
+    */
+    long toDec(){
+        long sum=0;
+        if(this->head==nullptr) return sum;
+        else{
+            Node* temp = this->head;
+
+            while(temp!=nullptr){
+                sum = sum*10 + temp->data;
+                temp = temp->next;
+            }
+        } 
+        return sum;
+
+    }
+
+    /*
+    Folds the linked list
+    @return folded LL
+    */
+    LL* fold(){
+        int n = this->size();
+        if(n==0) return nullptr;
+        else{
+            LL* nl = new LL();
+            for(int i{1};i<=n/2;i++){
+                nl->append(this->fetch(i));
+                nl->append(this->fetch(n+1-i));
+            }
+
+            if(n%2!=0){
+                nl->append(this->fetch(n/2+1));
+            }
+
+            return nl;
+        }
+
+    }
+
+
+    /*
+    Unfolds a linked list
+    */
+    LL* unfold(){
+        if( this->head == nullptr) return nullptr;
+        else{
+            LL* nl = new LL();
+            int n = this->size();
+            for(int i{1};i<=n;i+=2){
+                nl->append(this->fetch(i));
+            }
+            int p = nl->size();
+            for(int i{2};i<=n;i+=2){
+                nl->put(this->fetch(i),p);
+            }
+
+            return nl;
+        }
+    }
 };
+
+
+
 
 int main(){
 
@@ -371,10 +469,12 @@ int main(){
         n.add();
     }
 
-    n.deleteDuplicates();
-    n.print();
     
-
+    LL* fl = n.unfold();
+    fl->print();
+    std::cout<<std::endl;
 
 
 }
+
+
