@@ -1,6 +1,6 @@
 #include <iostream>
-
-
+#include <vector>
+#include <algorithm>
 /*
 Node class is the link of the linked-list
 */
@@ -453,13 +453,37 @@ public:
             return nl;
         }
     }
+
+    /*
+    @return index of node containing n
+    @param n: data to be serached
+    */
+    int find(Node* n){
+        int p=0;
+        if(this->head==nullptr) return 0;
+        else{
+            Node* temp = this->head;
+            while(temp!=nullptr){
+                if(temp == n) break;
+                p++;
+                temp = temp->next;
+            }
+            if(temp!=nullptr) return p+1;
+            else return 0;
+        }
+    }
+
+
+
+
+
+    
 };
 
 
 
 
 int main(){
-
 
     LL n;
     int p;
@@ -469,10 +493,6 @@ int main(){
         n.add();
     }
 
-    
-    LL* fl = n.unfold();
-    fl->print();
-    std::cout<<std::endl;
 
 
 }
