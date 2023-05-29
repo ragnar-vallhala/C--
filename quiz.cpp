@@ -1,36 +1,38 @@
+#include<stack>
+#include <vector>
 #include <iostream>
+#include <algorithm>
 using namespace std;
 
-bool goodNum(int n){
-    int sum{};
-    bool d=true;
-    while(n>0){
-        if(n%10<=sum && d!=true) return false;
-        d=false;
-        sum+=n%10;
-        n/=10;
+int max(vector<int> &vec){
+    int mx=vec[0];
+    for(int i{};i<vec.size();i++){
+        if(mx<vec[i]) mx=vec[i];
     }
-    return true;
-    
+    return mx;
 }
 
-bool isNP(int n, int d){
-    while(n>0){
-        if(n%10==d) return false;
-        n/=10;
-    }
-    return true;
-}
-
-int main(){
-
-    int n,m,d;
-    cin>>n>>m>>d;
-
-    for(int i{n};i<=m;i++){
-        if(isNP(i,d)&&goodNum(i)){
-            cout<<i<<" ";
+int main() {
+    while(1){
+        stack<int> stk;
+        vector<int> vec{0};
+        int n;
+        cin>>n;
+        for(int i{};i<n;i++){
+            int num;
+            cin>>num;
+            if(num==1){
+                stk.push(num);
+            }
+            else{
+                vec.push_back(stk.size());
+                
+            }
         }
+        vec.push_back(stk.size()-(vec.size()>1?vec[vec.size()-1]:0));
+       
+        stk.empty();
+        cout<<max(vec)<<endl;
     }
-  
+    return 0;
 }
